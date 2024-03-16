@@ -1,0 +1,58 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@mui/material": "^5.15.11",
+    "@mui/styles": "^5.15.11",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.21.4",
+    "blueimp-load-image": "^5.14.0",
+    "image-to-base64": "^2.1.1",
+    "react": "^18.2.0",
+    "react-base64-downloader": "^2.1.6",
+    "react-before-after-slider": "^1.0.4",
+    "react-bna": "^1.0.2",
+    "react-compare-image": "2.1.1",
+    "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
+    "react-images-upload": "^1.2.8",
+    "react-loading-overlay": "^1.0.1",
+    "react-scripts": "4.0.0",
+    "react-spinners": "^0.9.0",
+    "react-svg": "^11.1.0",
+    "resize-observer-polyfill": "^1.5.1",
+    "web-vitals": "^0.2.4"
+  },
+  "scripts": {
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.0"
+  }
+}
