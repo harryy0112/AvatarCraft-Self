@@ -52,6 +52,7 @@ export default function Home() {
   const [percentage, setPercentage] = useState(0.5);
   const [modelID, setModelID] = useState(0);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     toDataUrl(beforePlaceholder, (base64) => {
@@ -66,6 +67,47 @@ export default function Home() {
   }, []);
 
   const classes = useStyles();
+
+  const handleImageChange = (pictureFiles, pictureDataURL) => {
+    setOpen(true);
+    setPercentage(1);
+    setLoading(true);
+
+    loadImage(
+      pictureDataURL[0],
+      (cnv) => {
+        setBefore(cnv.toDataURL());
+        setAfter(cnv.toDataURL());
+        const data = {
+          image: cnv.toDataURL(),
+          model_id: modelID,
+          load_size: LOAD_SIZE,
+        };
+        transform(data)
+          .then((response) => {
+            console.log("success");
+            console.log(response.data);
+            setAfter(response.data.output);
+            setPercentage(0.0);
+            setLoading(false);
+            setOpen(false);
+          })
+          .catch((error) => {
+            console.error("Error transforming image:", error);
+            setLoading(false);
+            setOpen(false);
+            // Handle error based on your application's requirements
+          });
+      },
+      {
+        orientation: true,
+        canvas: true,
+        crossOrigin: "anonymous",
+        maxWidth: 600,
+      }
+    );
+  };
+
   return (
     <Box align="center">
       <div style={{ textAlign: "center", width: "100%" }}>
@@ -85,40 +127,7 @@ export default function Home() {
         <ImageUploader
           singleImage
           buttonText="Choose images"
-          onChange={(pictureFiles, pictureDataURL) => {
-            setOpen(true);
-            setPercentage(1);
-
-            loadImage(
-              pictureDataURL[0],
-              (cnv) => {
-                setBefore(cnv.toDataURL());
-                setAfter(cnv.toDataURL());
-                const data = {
-                  image: cnv.toDataURL(),
-                  model_id: modelID,
-                  load_size: LOAD_SIZE,
-                };
-                transform(data)
-                  .then((response) => {
-                    console.log("success");
-                    console.log(response.data);
-                    setAfter(response.data.output);
-                    setPercentage(0.0);
-                    setOpen(false);
-                  })
-                  .catch((response) => {
-                    console.log(response);
-                  });
-              },
-              {
-                orientation: true,
-                canvas: true,
-                crossOrigin: "anonymous",
-                maxWidth: 600,
-              }
-            );
-          }}
+          onChange={handleImageChange}
           imgExtension={[".jpg", ".gif", ".png", ".gif", "jpeg"]}
           maxFileSize={5242880}
         />
@@ -146,7 +155,7 @@ export default function Home() {
         />
       </div>
       <Backdrop
-        open={open}
+        open={open || loading} // Show backdrop when loading or open
         style={{ zIndex: 999 }}
         onClick={() => {
           setOpen(false);
