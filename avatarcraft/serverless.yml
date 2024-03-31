@@ -11,12 +11,14 @@
 #
 # Happy Coding!
 
-service: cartoonify
+service: avatarcraft
+
+frameworkVersion: "3"
 
 provider:
   name: aws
   runtime: python3.7
-  profile: cartoonify
+  profile: avatarcraft
   region: eu-west-3
   timeout: 60
   iamRoleStatements:
