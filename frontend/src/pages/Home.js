@@ -41,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     width: WIDTH * 0.8,
-    marginTop: 10,
-    marginLeft: 20,
+    marginTop: 20,
+    marginLeft: 0,
   },
 }));
 
