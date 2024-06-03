@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   holder: {
     width: WIDTH,
-    maxWidth: 350,
+    maxWidth: 400,
     margin: 10,
   },
   chip: {
