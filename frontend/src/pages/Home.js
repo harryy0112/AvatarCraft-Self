@@ -55,12 +55,10 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // Load placeholder images
     toDataUrl(beforePlaceholder, (base64) => {
       setBefore(base64);
     });
-  }, []);
-
-  useEffect(() => {
     toDataUrl(afterPlaceholder, (base64) => {
       setAfter(base64);
     });
@@ -76,27 +74,28 @@ export default function Home() {
     loadImage(
       pictureDataURL[0],
       (cnv) => {
-        setBefore(cnv.toDataURL());
-        setAfter(cnv.toDataURL());
+        const imageData = cnv.toDataURL();
+        setBefore(imageData);
+        setAfter(imageData);
+
         const data = {
-          image: cnv.toDataURL(),
+          image: imageData,
           model_id: modelID,
           load_size: LOAD_SIZE,
         };
         transform(data)
           .then((response) => {
-            console.log("success");
-            console.log(response.data);
+            console.log("Success:", response.data);
             setAfter(response.data.output);
             setPercentage(0.0);
-            setLoading(false);
-            setOpen(false);
           })
           .catch((error) => {
             console.error("Error transforming image:", error);
+            // You might want to add UI feedback or more detailed error handling here
+          })
+          .finally(() => {
             setLoading(false);
             setOpen(false);
-            // Handle error based on your application's requirements
           });
       },
       {
@@ -111,7 +110,7 @@ export default function Home() {
   return (
     <Box align="center">
       <div style={{ textAlign: "center", width: "100%" }}>
-        <img src={logo} className={classes.logo} alt=" " />
+        <img src={logo} className={classes.logo} alt="Logo" />
       </div>
       <div className={classes.holder}>
         <StyleSelector
@@ -128,7 +127,7 @@ export default function Home() {
           singleImage
           buttonText="Choose images"
           onChange={handleImageChange}
-          imgExtension={[".jpg", ".gif", ".png", ".gif", "jpeg"]}
+          imgExtension={[".jpg", ".png", "jpeg", ".gif"]} // Removed duplicate ".gif"
           maxFileSize={5242880}
         />
 
@@ -155,7 +154,7 @@ export default function Home() {
         />
       </div>
       <Backdrop
-        open={open || loading} // Show backdrop when loading or open
+        open={open || loading}
         style={{ zIndex: 999 }}
         onClick={() => {
           setOpen(false);
