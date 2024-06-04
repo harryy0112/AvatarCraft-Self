@@ -25,7 +25,7 @@ provider:
     - Effect: Allow
       Action:
         - s3:getObject
-      Resource: arn:aws:s3:::cartoongan/models/*
+      Resource: arn:aws:iam::022868503165:user/avatarcraft
     - Effect: Allow
       Action:
         - "lambda:InvokeFunction"
